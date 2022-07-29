@@ -5,6 +5,9 @@ import javax.swing.JPanel;
 public class JP extends JPanel{
 	Card c = new Card(1,2,50,50);
 	public JP() {
+		Listener listener = new Listener(this);
+        addMouseListener(listener);
+        addMouseMotionListener(listener);
 		setBackground(Color.black);
 		c.flip();
 	}
@@ -13,8 +16,11 @@ public class JP extends JPanel{
         c.draw(g);
 	}
 	public Card findCard(int xClick, int yClick) {
-		Card c = new Card();
-		//
+		//search all cards on the panel if they contain the x,y
+		if(c.clicked(xClick, yClick)) {
+			return c;
+		}
+		
 		return c;
 	}
 }

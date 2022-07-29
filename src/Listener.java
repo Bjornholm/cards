@@ -1,4 +1,3 @@
-import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
@@ -16,23 +15,31 @@ implements MouseMotionListener{
 		jp = j;
 	}
 	
-	public void clicked(MouseEvent e) {
+	public void mousePressed(MouseEvent e) {
 		xClick = e.getX();
 		yClick = e.getY();
-		//check if we clicked object
+		System.out.println(xClick+" "+yClick);
+		//check jPanel if we clicked an object
 		c = jp.findCard(xClick, yClick);
+		if(c != null) {
+			xStart = c.getX();
+			yStart = c.getY();
+			System.out.print(xClick+" "+yClick);
+		}
 	}
-	public void drag(MouseEvent e) {
+	public void mouseDragged(MouseEvent e) {
 		xStop = e.getX() - xClick;
 		yStop = e.getY() - yClick;
 		//Redraw clicked object
+		c.move(xStop, yStop);
 		xClick = e.getX();
 		yClick = e.getY();
 	}
-	public void drop(MouseEvent e) {
+	public void mouseReleased(MouseEvent e) {
 		xStop = e.getX() - xClick;
 		yStop = e.getY() - yClick;
-		//see if we can drop object here
+		//see if we can drop object here	
+			c.move(xStop, yStop);
 		
 	}
 }

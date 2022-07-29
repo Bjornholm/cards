@@ -65,13 +65,12 @@ public class Card {
 			g.drawString(""+suit + " | "+rank, x+1, y+15);
 		}
 	}
-	public void move(Graphics g, int x2, int y2) {
-		x = x2;
-		y = y2;
+	public void move(int xStop, int yStop) {
+		x = xStop;
+		y = yStop;
 	}
 	public void flip() {		
 		face = !face;
-		System.out.print(face);
 	}
 	public boolean clicked(int xClick, int yClick) {
 		if((xClick < x + width && xClick > x) &&
