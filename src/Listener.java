@@ -9,7 +9,8 @@ implements MouseMotionListener{
 	Card c;	
 	int xClick = 0, yClick = 0, 
 		xStart = 0 , yStart = 0,
-		xStop = 0 , yStop = 0;
+		xStop = 0 , yStop = 0,
+		xMoved = 0, yMoved =0;
 	
 	public Listener(JP j) {
 		jp = j;
@@ -18,28 +19,40 @@ implements MouseMotionListener{
 	public void mousePressed(MouseEvent e) {
 		xClick = e.getX();
 		yClick = e.getY();
-		System.out.println(xClick+" "+yClick);
 		//check jPanel if we clicked an object
 		c = jp.findCard(xClick, yClick);
 		if(c != null) {
+			System.out.println("xstart");
 			xStart = c.getX();
 			yStart = c.getY();
-			System.out.print(xClick+" "+yClick);
 		}
 	}
 	public void mouseDragged(MouseEvent e) {
 		xStop = e.getX() - xClick;
 		yStop = e.getY() - yClick;
+		
+		xMoved = xStart + xStop;
+		yMoved = yStart + yStop;
+		
+		//System.out.println(xMoved + " "+yMoved );
 		//Redraw clicked object
-		c.move(xStop, yStop);
-		xClick = e.getX();
-		yClick = e.getY();
+		if(c != null) {			
+			c.move(xMoved, yMoved);
+			jp.repaint();
+		}
+		//xClick = e.getX();
+		//yClick = e.getY();
 	}
 	public void mouseReleased(MouseEvent e) {
 		xStop = e.getX() - xClick;
 		yStop = e.getY() - yClick;
 		//see if we can drop object here	
-			c.move(xStop, yStop);
-		
+		if(c != null) {			
+			c.move(xMoved, yMoved);
+			jp.repaint();
+		}
+		xMoved = 0;
+		yMoved = 0;
+		c = null;
 	}
 }

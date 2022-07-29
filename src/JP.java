@@ -20,7 +20,6 @@ public class JP extends JPanel{
 		if(c.clicked(xClick, yClick)) {
 			return c;
 		}
-		
-		return c;
+		return null;
 	}
 }

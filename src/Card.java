@@ -4,7 +4,7 @@ import java.util.Map;
 
 public class Card {
 	private int x, y;
-	final int width = 35, height = 50;
+	final public int width = 35, height = 50;
 	private boolean face = false;
 	private int suit, rank;
 	Map<Integer,String> suitString = Map.ofEntries(
@@ -75,6 +75,7 @@ public class Card {
 	public boolean clicked(int xClick, int yClick) {
 		if((xClick < x + width && xClick > x) &&
 		   (yClick < y + height && yClick > y)){
+			System.out.print("clicked on the card");
 			return true;
 		}
 		
