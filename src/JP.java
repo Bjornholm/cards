@@ -12,4 +12,9 @@ public class JP extends JPanel{
         super.paintComponent(g);
         c.draw(g);
 	}
+	public Card findCard(int xClick, int yClick) {
+		Card c = new Card();
+		//
+		return c;
+	}
 }

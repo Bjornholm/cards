@@ -58,10 +58,10 @@ public class Card {
 //Drawing and moving methods
 	
 	public void draw(Graphics g) {
-		g.setColor(Color.YELLOW);
+		g.setColor(Color.white);
 		g.fillRect(x, y, width, height);
 		if(face) {			
-			g.setColor(Color.black);		
+			g.setColor(Color.red);		
 			g.drawString(""+suit + " | "+rank, x+1, y+15);
 		}
 	}
@@ -72,5 +72,13 @@ public class Card {
 	public void flip() {		
 		face = !face;
 		System.out.print(face);
+	}
+	public boolean clicked(int xClick, int yClick) {
+		if((xClick < x + width && xClick > x) &&
+		   (yClick < y + height && yClick > y)){
+			return true;
+		}
+		
+		return false;
 	}
 }

@@ -37,4 +37,7 @@ public class Deck {
 			tempDeck.remove(randIndex);
 		}
 	}
+	public void showTop() {
+		deck.get(deck.size()-1).flip();
+	}
 }
