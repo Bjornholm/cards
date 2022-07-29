@@ -1,2 +1,2 @@
-#Solitaire card game
+# Solitaire card game
 Card game using swing
