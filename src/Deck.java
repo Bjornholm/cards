@@ -26,13 +26,13 @@ public class Deck {
 	}
 	
 	public void Shuffle() {
-		//copy deck, clear original deck, add cards at random over to original deck
+		//copy deck, clear original deck, add random cards over to original deck
 		ArrayList<Card> tempDeck = new ArrayList<>(deck);
 		Random rnd = new Random();
 		deck.clear();
 		for(int c = 0; c < cards; c++ ) {
 			int randIndex = rnd.nextInt(cards-c);
-			System.out.println("randiundex: "+randIndex+" c: "+c+" cards: "+cards);
+			//System.out.println("randiundex: "+randIndex+" c: "+c+" cards: "+cards);
 			deck.add(tempDeck.get(randIndex));
 			tempDeck.remove(randIndex);
 		}
