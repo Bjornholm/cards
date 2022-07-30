@@ -15,17 +15,29 @@ public class Deck {
 			}
 		}
 	}
-	public Card Pop() {	
+	public Card pop() {	
 		return deck.remove(deck.size()-1);
 	}
-	public void Add(Card c) {
+	public Card pop(int i) {
+		try{
+			return deck.remove(i);
+			}
+			catch(StringIndexOutOfBoundsException e ){
+				System.out.println("Trying to access wrong index from Deck.pop(int i)");
+			}
+			return null;	
+	}
+	public void add(Card c) {
 		deck.add(c);
 	}
 	public Card get(int i) {
 		return deck.get(i);
 	}
+	public int size(){
+		return deck.size();
+	}
 	
-	public void Shuffle() {
+	public void shuffle() {
 		//copy deck, clear original deck, add random cards over to original deck
 		ArrayList<Card> tempDeck = new ArrayList<>(deck);
 		Random rnd = new Random();

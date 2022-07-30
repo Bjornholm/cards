@@ -1,9 +1,7 @@
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
 
-class Listener extends MouseAdapter 
-implements MouseMotionListener{
+class Listener extends MouseAdapter {
 	
 	JP jp;
 	Card c;	
@@ -22,7 +20,7 @@ implements MouseMotionListener{
 		//check jPanel if we clicked an object
 		c = jp.findCard(xClick, yClick);
 		if(c != null) {
-			System.out.println("xstart");
+			//System.out.println("mousePressed found");
 			xStart = c.getX();
 			yStart = c.getY();
 		}
@@ -44,11 +42,11 @@ implements MouseMotionListener{
 		//yClick = e.getY();
 	}
 	public void mouseReleased(MouseEvent e) {
-		xStop = e.getX() - xClick;
-		yStop = e.getY() - yClick;
+		xStop = e.getX() - xClick + xStart;
+		yStop = e.getY() - yClick + yStart;
 		//see if we can drop object here	
 		if(c != null) {			
-			c.move(xMoved, yMoved);
+			c.move(xStop, yStop);
 			jp.repaint();
 		}
 		xMoved = 0;

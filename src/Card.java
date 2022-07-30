@@ -54,12 +54,19 @@ public class Card {
 	public void setY(int yIn) {
 		y = yIn;
 	}
+	public void setXY(int xIn, int yIn){
+		x = xIn;
+		y = yIn;
+	}
 //_________________________________________________________________________________________________
 //Drawing and moving methods
 	
 	public void draw(Graphics g) {
 		g.setColor(Color.white);
 		g.fillRect(x, y, width, height);
+		g.setColor(Color.red);
+		g.drawRect(x, y, width, height);
+		
 		if(face) {			
 			g.setColor(Color.red);		
 			g.drawString(""+suit + " | "+rank, x+1, y+15);
@@ -75,7 +82,7 @@ public class Card {
 	public boolean clicked(int xClick, int yClick) {
 		if((xClick < x + width && xClick > x) &&
 		   (yClick < y + height && yClick > y)){
-			System.out.print("clicked on the card");
+			//System.out.print("clicked on the card");
 			return true;
 		}
 		
