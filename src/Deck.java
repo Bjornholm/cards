@@ -3,10 +3,12 @@ import java.util.Random;
 
 public class Deck {
 	
-	private final int suits = 4, ranks = 13, cards = 52;
+	public final int suits = 4, ranks = 13, cards = 52;
 	ArrayList<Card> deck = new ArrayList<>();
 	
 	public Deck(){
+	}
+	public void fill(){
 		//Create a 52 card deck
 		for(int suit = 0;suit < suits; suit++) {
 			for(int rank = 0;rank< ranks; rank++) {
@@ -15,6 +17,7 @@ public class Deck {
 			}
 		}
 	}
+
 	public Card pop() {	
 		return deck.remove(deck.size()-1);
 	}
