@@ -5,7 +5,7 @@ import javax.swing.JPanel;
 
 public class JP extends JPanel{
 
-	Card c = new Card(1,2,80,80);
+	//Card c = new Card(1,2,80,80);
 	Deck deck = new Deck();
 	Stack source = new Stack();
 	Stack waste = new Stack();
@@ -13,7 +13,7 @@ public class JP extends JPanel{
 	Stack[] sorted = new Stack[4];
 
 	Card selectedCard = null;
-
+	//______________________________________________________________________________________________
 	public JP() {
 		Listener listener = new Listener(this);
         addMouseListener(listener);
@@ -21,9 +21,10 @@ public class JP extends JPanel{
 		setBackground(Color.black);
 		boardSetup();
 	}
+	//______________________________________________________________________________________________
 	public void paintComponent(Graphics g) {
         super.paintComponent(g);	
-        c.draw(g);
+        //c.draw(g);
 		source.draw(g);
 		waste.draw(g);
 		for (Stack s : pile) {
@@ -36,20 +37,25 @@ public class JP extends JPanel{
 			selectedCard.draw(g);
 		}
 	}
-	public Card findCard(int xClick, int yClick) {
+	//______________________________________________________________________________________________
+	public Card findCard(int xClick, int yClick, Graphics g) {
 		//search all cards on the panel if they contain x,y
-		if(c.clicked(xClick, yClick)) {
-			System.out.println("c clicked");
-			return c;
-		}
-		else if(source.contains(xClick, yClick) != null){
+		
+		//Special behavior for source - card goes to waste or reshuffles waste if empty!
+		if(source.contains(xClick, yClick) != null){
 			System.out.println("stack clicked");
-			return source.contains(xClick, yClick);
-		}
-		else if(waste.contains(xClick, yClick) != null){
+			//return source.contains(xClick, yClick);
+			waste.add(source.pop());
+			waste.get(waste.size()-1).setXY(waste.getX(),waste.getY());
+			paintComponent(g);
+		}else if (source.clicked(xClick, yClick) && source.size() == 0){
+			sourceFill(waste);
+			paintComponent(g);
+		}else if(waste.contains(xClick, yClick) != null){
 			System.out.println("waste clicked");
-			return source.contains(xClick, yClick);
+			return waste.contains(xClick, yClick);
 		}
+
 		for (Stack s : pile) {
 			if(s.contains(xClick,yClick) != null){
 				System.out.println("pile clicked");
@@ -72,16 +78,16 @@ public class JP extends JPanel{
 		}
 		return null;
 	}
+	//______________________________________________________________________________________________
 	private void boardSetup(){
 		
 		int startX = 50;
 		int startY = 50;
 		
-		c.flip();
 		deck.fill();
 		deck.shuffle();
 
-		//Position all stacks on the board
+		//Position all empty stacks on the board
 		source.setXY(startX, startY);
 		waste.setXY(startX + waste.width, startY);
 
@@ -94,14 +100,24 @@ public class JP extends JPanel{
 
 		//Deal correct amount of cards to all stacks
 		for(int i = 0; i <7; i++){
-			deck.get(deck.size()-1).setXY(pile[i].x, pile[i].y+i);
-			deck.get(deck.size()-1).flip();
-			pile[i].add(deck.pop());
+			for(int j = i; j <7;j++ ){
+				deck.get(deck.size()-1).setXY(pile[j].x, pile[j].y+i);
+				deck.get(deck.size()-1).flip();
+				pile[j].add(deck.pop());
+			}
 		}
-		while(deck.size() > 0){
-			deck.get(0).setXY(50, 50);
-			deck.get(0).flip();
-			source.add(deck.pop(0));
+		sourceFill(deck);
+	}
+	//______________________________________________________________________________________________
+	private void sourceFill(Deck st){
+		int i = 0;
+		while(st.size() > 0){
+			st.get(0).setXY(50, 50+i);
+			if(!st.get(0).face()){
+				st.get(0).flip();
+			}
+			source.add(st.pop(0));
+			i++;
 		}
 	}
 }

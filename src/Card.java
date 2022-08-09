@@ -72,20 +72,26 @@ public class Card {
 			g.drawString(""+suit + " | "+rank, x+1, y+15);
 		}
 	}
+	//______________________________________________________________________________________________
 	public void move(int xStop, int yStop) {
 		x = xStop;
 		y = yStop;
 	}
+	//______________________________________________________________________________________________
 	public void flip() {		
 		face = !face;
 	}
+	//______________________________________________________________________________________________
+	public boolean face() {		
+			return face;
+	}
+	//______________________________________________________________________________________________
 	public boolean clicked(int xClick, int yClick) {
 		if((xClick < x + width && xClick > x) &&
 		   (yClick < y + height && yClick > y)){
 			//System.out.print("clicked on the card");
 			return true;
-		}
-		
+		}	
 		return false;
 	}
 }

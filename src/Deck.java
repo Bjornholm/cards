@@ -8,6 +8,7 @@ public class Deck {
 	
 	public Deck(){
 	}
+	//______________________________________________________________________________________________
 	public void fill(){
 		//Create a 52 card deck
 		for(int suit = 0;suit < suits; suit++) {
@@ -17,10 +18,11 @@ public class Deck {
 			}
 		}
 	}
-
+	//______________________________________________________________________________________________
 	public Card pop() {	
 		return deck.remove(deck.size()-1);
 	}
+	//______________________________________________________________________________________________
 	public Card pop(int i) {
 		try{
 			return deck.remove(i);
@@ -30,16 +32,19 @@ public class Deck {
 			}
 			return null;	
 	}
+	//______________________________________________________________________________________________
 	public void add(Card c) {
 		deck.add(c);
 	}
+	//______________________________________________________________________________________________
 	public Card get(int i) {
 		return deck.get(i);
 	}
+	//______________________________________________________________________________________________
 	public int size(){
 		return deck.size();
 	}
-	
+	//______________________________________________________________________________________________
 	public void shuffle() {
 		//copy deck, clear original deck, add random cards over to original deck
 		ArrayList<Card> tempDeck = new ArrayList<>(deck);
@@ -52,6 +57,7 @@ public class Deck {
 			tempDeck.remove(randIndex);
 		}
 	}
+	//______________________________________________________________________________________________
 	public void showTop() {
 		deck.get(deck.size()-1).flip();
 	}
