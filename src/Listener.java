@@ -4,7 +4,7 @@ import java.awt.event.MouseEvent;
 class Listener extends MouseAdapter {
 	
 	JP jp;
-	Card c;	
+	Card c;
 	int xClick = 0, yClick = 0, 
 		xStart = 0 , yStart = 0,
 		xStop = 0 , yStop = 0,
@@ -39,16 +39,19 @@ class Listener extends MouseAdapter {
 			c.move(xMoved, yMoved);
 			jp.repaint();
 		}
-		//xClick = e.getX();
-		//yClick = e.getY();
 	}
 	public void mouseReleased(MouseEvent e) {
 		xStop = e.getX() - xClick + xStart;
 		yStop = e.getY() - yClick + yStart;
+
 		//see if we can drop object here
 		//TODO - object needs to move back to it's original coordinates if it's not allowed to be dropped at current location	
-		if(c != null) {			
-			c.move(xStart, yStart);
+		if(c != null) {					
+			if(jp.dropCard(xClick, yClick,c)){
+				//delete c?
+			}else{
+				jp.returnCard(xStart, yStart, c);
+			}
 			jp.repaint();
 		}
 		xMoved = 0;

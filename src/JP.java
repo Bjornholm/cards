@@ -53,27 +53,19 @@ public class JP extends JPanel{
 			paintComponent(g);
 		}else if(waste.contains(xClick, yClick) != null){
 			System.out.println("waste clicked");
-			return waste.contains(xClick, yClick);
+			return selectedCard = waste.pop();
 		}
 
 		for (Stack s : pile) {
 			if(s.contains(xClick,yClick) != null){
 				System.out.println("pile clicked");
-				return s.contains(xClick, yClick);
+				return selectedCard = s.pop();
 			};
 		}
-		/*
-		for(int i = 0; i <7; i++){;
-			if(pile[i].contains(xClick,yClick) != null){
-				System.out.println("pile  of "+ i+" clicked");
-				return pile[i].contains(xClick, yClick);
-			};
-		}
-		 */
 		for (Stack s : sorted) {
 			if(s.contains(xClick,yClick) != null){
 				System.out.println("sorted clicked");
-				return s.contains(xClick, yClick);
+				return selectedCard = s.pop();
 			};
 		}
 		return null;
@@ -119,5 +111,61 @@ public class JP extends JPanel{
 			source.add(st.pop(0));
 			i++;
 		}
+	}
+	//______________________________________________________________________________________________
+	public boolean dropCard(int xDrop, int yDrop, Card c) {
+		//drops card on sorted cell or piles
+		
+		for (Stack s : pile) {
+			if(s.contains(xDrop,yDrop) != null){
+				Card t = s.contains(xDrop, yDrop);
+				if(c.drop(t)){
+					s.add(c);
+				}
+				System.out.println("pile drop");
+			}
+			if(s.size() == 0  && c.getRank() == 12){
+				s.add(c);
+			}
+		}
+		for (Stack s : sorted) {
+			if(s.contains(xDrop,yDrop) != null){
+				Card t = s.contains(xDrop, yDrop);
+				if((c.getRank() == (t.getRank()+1)) && (c.getSuit() == t.getSuit())){
+					s.add(c);
+					return true;
+				}
+				System.out.println("sorted drop");
+			};
+			if(s.size() == 0 && c.getRank() == 0){
+				s.add(c);
+				System.out.println("sorted drop");
+				return true;
+			}
+		}
+		return false;
+	}
+	//______________________________________________________________________________________________
+	public Card returnCard(int xStart, int yStart, Card c) {
+		//returns card to original stack if card cannot be dropped
+
+		if((source.getX() == xStart) && (source.getY() == yStart)){
+			source.add(c);
+		}
+		if((waste.getX() == xStart) && (waste.getY() == yStart)){
+			waste.add(c);
+		}
+
+		for (Stack s : pile) {
+			if((s.getX() == xStart) && (s.getY() == yStart)){
+				s.add(c);
+			};
+		}
+		for (Stack s : sorted) {
+			if((s.getX() == xStart) && (s.getY() == yStart)){
+				s.add(c);
+			};
+		}
+		return null;
 	}
 }

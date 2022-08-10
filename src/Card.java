@@ -94,4 +94,20 @@ public class Card {
 		}	
 		return false;
 	}
+	//______________________________________________________________________________________________
+	//Can this be dropped on card c?
+	public boolean drop(Card c){
+		if((this.getSuit() == 0 || this.getSuit() == 3) && (c.getSuit() == 1 || c.getSuit() == 2) ){
+			if(this.getRank() == (c.getRank()+1)){
+				return true;
+			}
+		}
+		if((this.getSuit() == 1 || this.getSuit() == 2) && (c.getSuit() == 0 || c.getSuit() == 3) ){
+			if(this.getRank() == (c.getRank()+1)){
+				return true;
+			}
+		}
+
+		return false;
+	}
 }
