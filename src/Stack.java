@@ -29,25 +29,16 @@ public class Stack extends Deck {
     public int getY(){
         return y;
     }
-/*
-    public void add(Card c) {
-		//c.setXY(x+5,y+5);
-        stack.add(c);
-	}
-  */
     //______________________________________________________________________________________________
     public Card contains(int x, int y ){
         Card c = null;
-        for(int i = this.size() - 1; i > -1;i--){
-            if(this.get(i).clicked(x,y)){
-                //return only topmost card in stack
-                if(i == this.size() - 1){
-                    c = this.get(i);
-                }
-                //this.pop(i);
-                break;
-            };
-        }
+        //for(int i = this.size() - 1; i > -1;i--){
+        //Check topmost card
+        	if(this.size() == 0) {
+        		//
+        	}else if(this.get(this.size() - 1).clicked(x,y)){
+                    c = this.get(this.size() - 1);
+        	}
         return c;
     }
     //______________________________________________________________________________________________
@@ -60,14 +51,11 @@ public class Stack extends Deck {
     }
     //______________________________________________________________________________________________
     public boolean clicked(int xClick, int yClick) {
-		if((xClick < x + width && xClick > x) &&
-		   (yClick < y + height && yClick > y)){
+		if(((xClick < (x + width)) && (xClick > x)) &&
+		   ((yClick < (y + height)) && (yClick > y))){
 			//System.out.print("clicked on the card");
 			return true;
 		}	
 		return false;
 	}
 }
-//TODO
-//unique stack and rules for; draw and drawn pile, 4 piles for each suit, 7 piles for initial deal
-//new class for each?

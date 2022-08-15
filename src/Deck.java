@@ -52,7 +52,6 @@ public class Deck {
 		deck.clear();
 		for(int c = 0; c < cards; c++ ) {
 			int randIndex = rnd.nextInt(cards-c);
-			//System.out.println("randindex: "+randIndex+" c: "+c+" cards: "+cards);
 			deck.add(tempDeck.get(randIndex));
 			tempDeck.remove(randIndex);
 		}

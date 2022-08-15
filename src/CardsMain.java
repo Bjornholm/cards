@@ -3,6 +3,7 @@ import javax.swing.*;
 public class CardsMain extends JFrame{
 	
 	public CardsMain() {
+		
 		setTitle("Solitaire");
 		JPanel jp = new JP();
 		add(jp);

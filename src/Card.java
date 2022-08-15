@@ -2,6 +2,9 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Map;
 
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+
 public class Card {
 	private int x, y;
 	final public int width = 35, height = 50;
@@ -87,8 +90,8 @@ public class Card {
 	}
 	//______________________________________________________________________________________________
 	public boolean clicked(int xClick, int yClick) {
-		if((xClick < x + width && xClick > x) &&
-		   (yClick < y + height && yClick > y)){
+		if(((xClick <= (x + width)) && (xClick >= x)) &&
+		   ((yClick <=( y + height)) && (yClick >= y))){
 			//System.out.print("clicked on the card");
 			return true;
 		}	
@@ -107,7 +110,6 @@ public class Card {
 				return true;
 			}
 		}
-
 		return false;
 	}
 }

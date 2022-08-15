@@ -19,13 +19,12 @@ class Listener extends MouseAdapter {
 		yClick = e.getY();
 		//check jPanel if we clicked an object
 		c = jp.findCard(xClick, yClick, jp.getGraphics());
-		//TODO - need alternate way to handle deal piles, should be able to move a card with stacked cards on top of it if they are flipped
-		//TODO some objects aren't allowed to move even if selected, i.e. they have unflipped cards above them
 		if(c != null) {
 			//System.out.println("mousePressed found");
 			xStart = c.getX();
 			yStart = c.getY();
 		}
+		jp.repaint();
 	}
 	public void mouseDragged(MouseEvent e) {
 		xStop = e.getX() - xClick;
@@ -37,25 +36,26 @@ class Listener extends MouseAdapter {
 		//Redraw clicked object
 		if(c != null) {			
 			c.move(xMoved, yMoved);
-			jp.repaint();
 		}
+		jp.repaint();
 	}
 	public void mouseReleased(MouseEvent e) {
 		xStop = e.getX() - xClick + xStart;
 		yStop = e.getY() - yClick + yStart;
-
 		//see if we can drop object here
 		//TODO - object needs to move back to it's original coordinates if it's not allowed to be dropped at current location	
 		if(c != null) {					
 			if(jp.dropCard(xClick, yClick,c)){
-				//delete c?
 			}else{
+				System.out.println("Xstart: "+xStart);
+				System.out.println("Ystart: "+yStart);
+
 				jp.returnCard(xStart, yStart, c);
-			}
-			jp.repaint();
+			}		
 		}
 		xMoved = 0;
 		yMoved = 0;
 		c = null;
+		jp.repaint();
 	}
 }

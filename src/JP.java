@@ -43,28 +43,26 @@ public class JP extends JPanel{
 		
 		//Special behavior for source - card goes to waste or reshuffles waste if empty!
 		if(source.contains(xClick, yClick) != null){
-			System.out.println("stack clicked");
 			//return source.contains(xClick, yClick);
 			waste.add(source.pop());
 			waste.get(waste.size()-1).setXY(waste.getX(),waste.getY());
 			paintComponent(g);
+			return null;
 		}else if (source.clicked(xClick, yClick) && source.size() == 0){
 			sourceFill(waste);
 			paintComponent(g);
+			return null;
 		}else if(waste.contains(xClick, yClick) != null){
-			System.out.println("waste clicked");
 			return selectedCard = waste.pop();
 		}
 
 		for (Stack s : pile) {
 			if(s.contains(xClick,yClick) != null){
-				System.out.println("pile clicked");
 				return selectedCard = s.pop();
 			};
 		}
 		for (Stack s : sorted) {
 			if(s.contains(xClick,yClick) != null){
-				System.out.println("sorted clicked");
 				return selectedCard = s.pop();
 			};
 		}
@@ -93,7 +91,7 @@ public class JP extends JPanel{
 		//Deal correct amount of cards to all stacks
 		for(int i = 0; i <7; i++){
 			for(int j = i; j <7;j++ ){
-				deck.get(deck.size()-1).setXY(pile[j].x, pile[j].y+i);
+				deck.get(deck.size()-1).setXY(pile[j].x, pile[j].y);
 				deck.get(deck.size()-1).flip();
 				pile[j].add(deck.pop());
 			}
@@ -102,14 +100,12 @@ public class JP extends JPanel{
 	}
 	//______________________________________________________________________________________________
 	private void sourceFill(Deck st){
-		int i = 0;
 		while(st.size() > 0){
-			st.get(0).setXY(50, 50+i);
+			st.get(0).setXY(50, 50);
 			if(!st.get(0).face()){
 				st.get(0).flip();
 			}
 			source.add(st.pop(0));
-			i++;
 		}
 	}
 	//______________________________________________________________________________________________
@@ -122,7 +118,6 @@ public class JP extends JPanel{
 				if(c.drop(t)){
 					s.add(c);
 				}
-				System.out.println("pile drop");
 			}
 			if(s.size() == 0  && c.getRank() == 12){
 				s.add(c);
@@ -135,37 +130,49 @@ public class JP extends JPanel{
 					s.add(c);
 					return true;
 				}
-				System.out.println("sorted drop");
 			};
 			if(s.size() == 0 && c.getRank() == 0){
 				s.add(c);
-				System.out.println("sorted drop");
 				return true;
 			}
 		}
 		return false;
 	}
 	//______________________________________________________________________________________________
-	public Card returnCard(int xStart, int yStart, Card c) {
+	public void returnCard(int x, int y, Card c) {
 		//returns card to original stack if card cannot be dropped
 
-		if((source.getX() == xStart) && (source.getY() == yStart)){
-			source.add(c);
+		if((x >= source.getX() && x <= (source.getX() + source.width))){
+			if((y >= source.getY() && y <= (source.getY() + source.height))){
+				c.setXY(source.getX(), source.getY());
+				source.add(c);
+			}
 		}
-		if((waste.getX() == xStart) && (waste.getY() == yStart)){
-			waste.add(c);
+		if((x >= waste.getX() && x <= (waste.getX() + source.width))){
+			if((y >= waste.getY() && y <= (waste.getY() + waste.height))){
+				c.setXY(waste.getX(), waste.getY());
+				waste.add(c);
+			}
 		}
-
 		for (Stack s : pile) {
-			if((s.getX() == xStart) && (s.getY() == yStart)){
-				s.add(c);
+			System.out.println("test 1"+(x >= s.getX() && x <= (s.getX() + s.width)));
+			System.out.println("test 2"+ (y >= s.getY() && y <= (s.getY() + s.height)));
+			if((x >= s.getX() && x <= (s.getX() + s.width))){
+				if((y >= s.getY() && y <= (s.getY() + s.height))){
+					c.setXY(s.getX(), s.getY());
+					s.add(c);
+					break;
+				}
 			};
 		}
 		for (Stack s : sorted) {
-			if((s.getX() == xStart) && (s.getY() == yStart)){
-				s.add(c);
+			if((x >= s.getX() && x <= (s.getX() + s.width))){
+				if((y >= s.getY() && y <= (s.getY() + s.height))){
+					c.setXY(s.getX(), s.getY());
+					s.add(c);
+					break;
+				}
 			};
 		}
-		return null;
 	}
 }
